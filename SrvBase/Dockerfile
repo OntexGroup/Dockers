@@ -1,9 +1,10 @@
-# Use an official Python runtime as a parent image
+# Use an official PHP FPM as image
 FROM php:7.2.9-fpm-alpine3.8
 
-LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
+LABEL maintainer="Julien Marusi"
 
 ENV NGINX_VERSION 1.15.3
+ENV WWWHOME /var/www/html
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
@@ -99,9 +100,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& make install \
 	&& rm -rf /etc/nginx/html/ \
 	&& mkdir /etc/nginx/conf.d/ \
-	&& mkdir -p /usr/share/nginx/html/ \
-	&& install -m644 html/index.html /usr/share/nginx/html/ \
-	&& install -m644 html/50x.html /usr/share/nginx/html/ \
+	&& mkdir -p "$WWWHOME"/ \
+	&& install -m644 html/index.html "$WWWHOME"/ \
+	&& install -m644 html/50x.html "$WWWHOME"/ \
 	&& install -m755 objs/nginx-debug /usr/sbin/nginx-debug \
 	&& install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
 	&& install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
@@ -139,11 +140,12 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log \
 	&& mkdir /var/run/php \
 	&& chown www-data.www-data /var/run/php \
+	&& chown www-data.www-data "$WWWHOME" \
 	&& apk add bash
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/conf.d
-COPY info.php /usr/share/nginx/html
+COPY info.php "$WWWHOME"
 COPY php-fpm.conf /usr/local/etc
 COPY www.conf /usr/local/etc/php-fpm.d
 COPY start.sh /usr/local/bin
