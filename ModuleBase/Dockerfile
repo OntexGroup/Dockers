@@ -10,3 +10,5 @@ COPY install_composer.sh "$WWWHOME"
 RUN apk add su-exec \
 	&& cd "$WWWHOME" \
 	&& su-exec www-data:www-data ./install_composer.sh
+
+COPY default.conf /etc/nginx/conf.d

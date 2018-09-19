@@ -21,8 +21,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
 		--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
 		--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-		# --user=www-data \
-		# --group=www-data \
+		--user=www-data \
+		--group=www-data \
 		--with-http_ssl_module \
 		--with-http_realip_module \
 		--with-http_addition_module \
