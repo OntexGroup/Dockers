@@ -141,7 +141,19 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& mkdir /var/run/php \
 	&& chown www-data.www-data /var/run/php \
 	&& chown www-data.www-data "$WWWHOME" \
+	&& cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
+	&& apk add zlib-dev \
+	&& docker-php-ext-install -j$(nproc) zip \
 	&& apk add bash
+
+# RUN mkdir /var/run/php \
+# 	&& chown www-data.www-data /var/run/php \
+# 	&& chown www-data.www-data "$WWWHOME" \
+# 	&& cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
+# 	# && apk add php7-common \
+# 	&& apk add zlib-dev \
+# 	&& docker-php-ext-install -j$(nproc) zip \
+# 	&& apk add bash
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/conf.d
