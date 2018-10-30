@@ -144,7 +144,10 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
 	&& apk add zlib-dev \
 	&& docker-php-ext-install -j$(nproc) zip \
-	&& apk add bash
+	&& apk add bash \
+	&& apk add git \
+	&& apk add nodejs-current npm \
+	&& npm install -g yarn
 
 # RUN mkdir /var/run/php \
 # 	&& chown www-data.www-data /var/run/php \
