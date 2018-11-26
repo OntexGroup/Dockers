@@ -12,7 +12,6 @@ COPY start.sh /usr/local/bin
 
 RUN apk add su-exec \
 	&& cd "$WWWHOME" \
-	&& npm install -g yarn \
 	&& su-exec www-data:www-data ./install_composer.sh
 
 CMD ["/usr/local/bin/start.sh"]
