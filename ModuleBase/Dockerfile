@@ -11,6 +11,7 @@ COPY start.sh /usr/local/bin
 
 
 RUN apk add su-exec \
+	&& apk add yarn \
 	&& cd "$WWWHOME" \
 	&& su-exec www-data:www-data ./install_composer.sh
 

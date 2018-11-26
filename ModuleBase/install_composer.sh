@@ -41,7 +41,6 @@ else
 fi
 
 echo "Updating packets"
-npm install yarn
 php ../composer.phar install
 yarn install
 yarn encore dev
