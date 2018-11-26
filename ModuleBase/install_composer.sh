@@ -24,6 +24,7 @@ then
     echo "Symfony already installed ..."
     cd C2M
     git fetch --all
+    git reset --hard origin/master
 else
     # echo "Installing Symfony 4 in $WWWHOME ..."
     # if [ -f "$WWWHOME/C2M/README.md" ]
@@ -37,10 +38,10 @@ else
     # fi
     git clone https://github.com/JulienMarusi/C2M.git
     cd C2M
-    npm install yarn
 fi
 
 echo "Updating packets"
+npm install yarn
 php ../composer.phar install
 yarn install
 yarn encore dev
